@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="frontend_layout_inherit_connect_as" inherit_id="website.layout">
+        <xpath expr="//header" position="before">
+            <t t-if="request.session.get('connect_as_original_uid')">
+                <div class="d-flex justify-content-between align-items-center w-100 px-4 py-2"
+                    dir="rtl"
+                    style="background-color: #1e293b; color: #f8fafc; z-index: 99999; position: relative; border-bottom: 3px solid #71639e; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
 
-    <!-- Register JS and XML assets for the systray component -->
-    <template id="assets_backend" inherit_id="web.assets_backend" name="Connect As User Assets">
-        <xpath expr="." position="inside">
-            <script type="text/javascript"
-                    src="/mo_connect_as_user/static/src/js/connect_as_systray.js"/>
+                    <div class="d-flex align-items-center gap-2"
+                        style="font-size: 15px; font-family: inherit;">
+                        <i class="fa fa-user-secret text-warning" style="font-size: 18px;" />
+                        <span>أنت متصل الآن بهوية العميل: <strong
+                                style="color: #cbd5e1; background-color: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; margin-right: 5px;">
+                                <t t-esc="user_id.name" />
+                            </strong>
+                        </span>
+                    </div>
+
+                    <div>
+                        <a href="/web/connect_as/return"
+                            class="btn fw-bold d-flex align-items-center gap-2"
+                            style="background-color: #dc2626; color: #ffffff; border: none; padding: 6px 16px; border-radius: 6px; font-size: 13px; transition: background 0.2s ease;">
+                            <i class="fa fa-undo" />
+                            <span>العودة لحساب (<t
+                                    t-esc="request.session.get('connect_as_original_name')" />)</span>
+                        </a>
+                    </div>
+
+                </div>
+            </t>
         </xpath>
     </template>
-
 </odoo>
